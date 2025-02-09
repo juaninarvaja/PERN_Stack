@@ -64,4 +64,4 @@ Reserva.belongsTo(Usuario);
 Vehiculo.hasMany(Reserva);
 Reserva.belongsTo(Vehiculo);
 
-module.exports = { Usuario, Vehiculo, Reserva };
+module.exports = { sequelize, Usuario, Vehiculo, Reserva };

@@ -2,9 +2,10 @@
   "name": "pern_stack",
   "version": "1.0.0",
   "description": "stack PERN (PostgreSQL, Express.js, React, Node.js)",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --coverage",
+    "dev": "nodemon nombre_del_archivo.js"
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,9 @@
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.5"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9"
   }
 }
