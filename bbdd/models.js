@@ -6,7 +6,7 @@ const sequelize = require('./bd');
 const Usuario = sequelize.define('Usuario', {
   name: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   password: {
     type: DataTypes.STRING,
@@ -48,6 +48,12 @@ const Vehiculo = sequelize.define('Vehiculo', {
   estado: {
     type: DataTypes.STRING,
   },
+  precio: {
+    type: DataTypes.INTEGER
+  },
+  picture: {
+    type: DataTypes.STRING
+  }
 });
 
 // Definir el modelo 'Reserva'

@@ -1,17 +1,22 @@
 const express = require('express');
 router = express.Router();
 const  { Usuario } = require('../bbdd/models');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
 
 
 router.post('/create', async (req, res) => {
     try {
       // Extraer los parámetros del cuerpo de la solicitud
       const { name, password, rol, email } = req.body;
+      const salt = await bcrypt.genSalt(10); // 10 es la complejidad del salt
+      const hashedPassword = await bcrypt.hash(password, salt);
   
       // Crear un nuevo usuario con los parámetros proporcionados
       const nuevoUsuario = await Usuario.create({
         name,
-        password,
+        password: hashedPassword,
         rol,
         email
       });
@@ -85,7 +90,38 @@ router.post('/create', async (req, res) => {
       res.status(500).send('Error al eliminar el usuario');
     }
   });
-  
+
+
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Buscar el usuario por correo
+    const user = await Usuario.findOne({ where: { email } });
+    if (!user) {
+      return res.status(400).json({ message: 'Usuario no encontrado' });
+    }
+
+    // Comparar la contraseña
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Contraseña incorrecta' });
+    }
+
+    // Generar un token JWT
+    const token = jwt.sign({ userId: user.id, role: user.role }, 'tu_clave_secreta', { expiresIn: '1h' });
+
+    // Enviar el token al frontend
+    res.json({ token });
+
+  } catch (error) {
+    console.error('Error al hacer login:', error);
+    res.status(500).json({ message: 'Error en el servidor' });
+  }
+});
+
+
+
   
   
   

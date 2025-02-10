@@ -2,11 +2,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Usuario, Vehiculo, Reserva, sequelize } = require('./bbdd/models');
+const cors = require('cors');
 // const sequelize = require('./bbdd/bd');
 const routerApi = require('./routes');
 
 const app = express();
-
+app.use(cors());
 // Middleware
 app.use(bodyParser.json());
 

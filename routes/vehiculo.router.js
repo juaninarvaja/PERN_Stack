@@ -4,7 +4,8 @@ const  { Vehiculo } = require('../bbdd/models');
 
 router.post('/create', async (req, res) => {
     try {
-      const { marca, modelo, ano, precio, tipo, kilometros, estado } = req.body;
+      const { marca, modelo, ano, precio, tipo, kilometros, estado, picture } = req.body;
+      const pictureSaved = picture ? picture : 'https://media.istockphoto.com/id/1214396728/es/vector/icono-rojo-del-coche-aislado-en-el-fondo-blanco-clip-art-coche-rojo-lindo-ilustraci%C3%B3n-del.jpg?s=612x612&w=0&k=20&c=G6QrM0Mt0lGSAqmuPaHqtxTR-TvrQYN0jw0hkj5Vb0M=';
       const nuevoVehiculo = await Vehiculo.create({
         marca,
         modelo,
@@ -12,7 +13,8 @@ router.post('/create', async (req, res) => {
         precio,
         tipo,
         kilometros,
-        estado
+        estado,
+        picture: pictureSaved
       });
       res.status(201).json(nuevoVehiculo);
     } catch (error) {
